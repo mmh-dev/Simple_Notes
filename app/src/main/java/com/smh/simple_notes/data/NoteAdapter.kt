@@ -25,8 +25,8 @@ class NoteAdapter(private val noteList: List<Note>, var clickListener: OnClickLi
     override fun onBindViewHolder(holder: NoteHolder, position: Int) {
         with(holder) {
             binding.apply {
-                cardTitle.text = noteList[position].title.toString()
-                cardText.text = noteList[position].text.toString()
+                cardTitle.text = noteList[position].title
+                cardText.text = noteList[position].text
             }
         }
     }

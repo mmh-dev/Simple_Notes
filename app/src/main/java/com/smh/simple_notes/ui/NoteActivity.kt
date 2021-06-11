@@ -9,6 +9,8 @@ import com.smh.simple_notes.databinding.ActivityMainBinding
 import com.smh.simple_notes.databinding.ActivityNoteBinding
 import com.smh.simple_notes.entities.Note
 import com.smh.simple_notes.viewmodel.NoteViewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NoteActivity : AppCompatActivity() {
 
@@ -20,13 +22,13 @@ class NoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
-        note = Note()
 
         var key = intent.getStringExtra("key")
-        if (key == "edit"){
-            note = intent.getSerializableExtra("note") as Note
+        note = if (key == "edit"){
+            intent.getSerializableExtra("note") as Note
+        } else{
+            Note()
         }
 
 
@@ -51,6 +53,10 @@ class NoteActivity : AppCompatActivity() {
                 noteViewModel.deleteNote(note)
                 startActivity(Intent(this@NoteActivity, MainActivity::class.java))
             }
+
+            val sdf = SimpleDateFormat("dd/M/yyyy hh:mm")
+            val currentDate = sdf.format(Date())
+            lastEditedDate.text = currentDate
         }
     }
 }
